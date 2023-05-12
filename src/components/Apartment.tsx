@@ -43,20 +43,23 @@ export default function Apartment({
       <Box>
         <Grid gap={2} templateColumns={"6fr 1fr"}>
           <Text display={"block"} as="b" noOfLines={1} fontSize="md">
-            {address_do}
+            {kapt_name}
           </Text>
           <HStack spacing={1} alignItems="center">
-            <FaStar size={12} />
-            <Text fontSize={"sm"}>{address_si}</Text>
+            {/* <FaStar size={12} /> */}
+            <Text fontSize={"sm"}></Text>
           </HStack>
         </Grid>
         <Text fontSize={"sm"} color={gray}>
-          {address_dong}, {address_li}
+          {address_do} // {address_si}
+        </Text>
+        <Text fontSize={"sm"} color={gray}>
+          {address_dong} {address_li}
         </Text>
       </Box>
-      <Text fontSize={"sm"} color={gray}>
-        <Text as="b">${kapt_name}</Text> / night
-      </Text>
+      {/* <Text fontSize={"sm"} color={gray}>
+        <Text as="b">{kapt_name}</Text>
+      </Text> */}
     </VStack>
   );
 }

@@ -3,18 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getApartment } from "../api";
 import Apartment from "../components/Apartment";
 import ApartmentSkeleton from "../components/ApartmentSkeleton";
-
-interface IApartment {
-  pk: number;
-  address_do: string;
-  address_si: string;
-  address_dong: string;
-  address_li: string;
-  kapt_name: string;
-}
+import { IApartmentList } from "../types";
 
 export default function Home() {
-  const { isLoading, data } = useQuery<IApartment[]>(["houses"], getApartment);
+  const { isLoading, data } = useQuery<IApartmentList[]>(
+    ["houses"],
+    getApartment
+  );
   return (
     <Grid
       mt={10}
@@ -49,7 +44,7 @@ export default function Home() {
       {data?.map((apt) => (
         <Apartment
           key={apt.pk}
-          imageUrl={`https://source.unsplash.com/random/450x450`}
+          imageUrl={`https://cdn.pixabay.com/photo/2013/07/12/18/09/apartment-building-153091_960_720.png`}
           address_do={apt.address_do}
           address_si={apt.address_si}
           address_dong={apt.address_dong}

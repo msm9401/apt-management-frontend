@@ -85,3 +85,35 @@ export const usernameLogIn = ({
         localStorage.setItem("access_token", accessToken);
       }
     });
+
+export interface ISignUpVariables {
+  username: string;
+  password: string;
+  password2: string;
+}
+
+export interface ISignUpSuccess {
+  ok: string;
+}
+
+export interface ISignUpError {
+  response: { data: { detail: string; username: string } };
+}
+
+export const signUp = ({ username, password, password2 }: ISignUpVariables) =>
+  instance
+    .post(
+      "users/signup",
+      { username, password, password2 },
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+        },
+      }
+    )
+    .then((response) => {
+      if (response.data["token"]) {
+        const accessToken = response.data["token"];
+        localStorage.setItem("access_token", accessToken);
+      }
+    });

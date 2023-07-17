@@ -19,3 +19,19 @@ export interface IUser {
   phone_number: string;
   profile_photo: string;
 }
+
+export interface IFeedList {
+  pk: number;
+  user: {
+    username: string;
+    profile_photo: string;
+  };
+  content: string;
+  photos: {
+    pk: number;
+    file: string;
+  };
+  comments_count: number;
+  created_at: string;
+  updated_at: string;
+}

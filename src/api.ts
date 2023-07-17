@@ -1,5 +1,6 @@
 import Cookie from "js-cookie";
 import axios from "axios";
+import { QueryFunctionContext } from "@tanstack/react-query";
 
 const instance = axios.create({
   baseURL: "http://127.0.0.1:8000/api/v1/",
@@ -16,6 +17,17 @@ export const getApartment = () =>
         })
         .then((response) => response.data)
     : instance.get("houses/").then((response) => response.data);
+
+export const getFeed = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, _] = queryKey;
+  return instance
+    .get(`houses/${kaptName}/feed`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
 
 /* export const knoxlogin = () =>
   instance.post("users/login").then((response) => response.data); */

@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Root from "./components/Root";
 import Home from "./routes/Home";
 import Feed from "./routes/Feed";
+import Search from "./routes/Search";
 import NotFound from "./routes/NotFound";
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "houses/:kaptName/feed",
         element: <Feed />,
+      },
+      {
+        path: "houses/*",
+        element: <Search />,
       },
     ],
   },

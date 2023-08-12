@@ -1,4 +1,4 @@
-import { FaMoon, FaSun } from "react-icons/fa";
+import { FaMoon, FaSearch, FaSun } from "react-icons/fa";
 import { MdApartment } from "react-icons/md";
 import {
   Avatar,
@@ -6,6 +6,9 @@ import {
   Button,
   HStack,
   IconButton,
+  Input,
+  InputGroup,
+  InputRightElement,
   Menu,
   MenuButton,
   MenuItem,
@@ -23,7 +26,7 @@ import SignUpModal from "./SignUpModal";
 import useUser from "../lib/useUser";
 import { logOut } from "../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
 export default function Header() {
   const { userLoading, isLoggedIn, user } = useUser();
@@ -66,6 +69,9 @@ export default function Header() {
   const onLogOut = async () => {
     mutation.mutate();
   };
+  const [value, setValue] = React.useState("");
+  const handleChange = (event: any) => setValue(event.target.value);
+
   return (
     <Stack
       justifyContent={"space-between"}
@@ -88,6 +94,23 @@ export default function Header() {
         </Link>
       </Box>
       <HStack spacing={2}>
+        <InputGroup>
+          <Input
+            type="text"
+            placeholder="아파트 찾기"
+            value={value}
+            onChange={handleChange}
+          />
+          <Link to={`/houses/search?keyword=${value}`}>
+            <InputRightElement>
+              <IconButton
+                aria-label="Search database"
+                type="submit"
+                icon={<FaSearch />}
+              />
+            </InputRightElement>
+          </Link>
+        </InputGroup>
         <IconButton
           onClick={toggleColorMode}
           variant={"ghost"}

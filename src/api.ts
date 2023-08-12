@@ -2,6 +2,7 @@ import Cookie from "js-cookie";
 import axios from "axios";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
+// http://52.79.128.21/api/v1/
 const instance = axios.create({
   baseURL: "http://127.0.0.1:8000/api/v1/",
   withCredentials: true,
@@ -117,3 +118,14 @@ export const signUp = ({ username, password, password2 }: ISignUpVariables) =>
         localStorage.setItem("access_token", accessToken);
       }
     });
+
+export const searchApt = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName] = queryKey;
+  return instance
+    .get(`houses/search?keyword=${kaptName}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};

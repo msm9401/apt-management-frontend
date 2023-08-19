@@ -18,6 +18,8 @@ export interface IUser {
   my_houses: IApartmentList[];
   phone_number: string;
   profile_photo: string;
+  is_confirmed: boolean;
+  is_staff: boolean;
 }
 
 export interface IFeedList {
@@ -27,10 +29,7 @@ export interface IFeedList {
     profile_photo: string;
   };
   content: string;
-  photos: {
-    pk: number;
-    file: string;
-  };
+  photos: Array;
   comments_count: number;
   created_at: string;
   updated_at: string;

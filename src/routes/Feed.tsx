@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { getFeed } from "../api";
 import {
   Avatar,
@@ -33,14 +33,19 @@ export default function Feed() {
         lg: 40,
       }}
     >
+      <Link to={`/houses/${kaptName}/feed/upload`}>
+        <Button colorScheme="teal" variant="outline" m={5}>
+          포스트를 남겨보세요
+        </Button>
+      </Link>
       {data?.map((feed) => (
-        <Card maxW="md">
+        <Card maxW="2xl" m={5}>
           <CardHeader>
             <Flex>
               <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
                 <Avatar
-                  name="Segun Adebayo"
-                  src="https://bit.ly/sage-adebayo"
+                  name={feed?.user.username}
+                  src={feed?.user.profile_photo}
                 />
 
                 <Box>
@@ -59,11 +64,7 @@ export default function Feed() {
           <CardBody>
             <Text>{feed.content}</Text>
           </CardBody>
-          <Image
-            objectFit="cover"
-            src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-            alt="Chakra UI"
-          />
+          <Image objectFit="cover" src={feed.photos[0]?.file} />
 
           <CardFooter
             justify="space-between"

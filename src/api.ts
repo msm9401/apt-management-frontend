@@ -2,12 +2,15 @@ import Cookie from "js-cookie";
 import axios from "axios";
 import { QueryFunctionContext } from "@tanstack/react-query";
 
-// http://52.79.128.21/api/v1/
 const instance = axios.create({
-  baseURL: "http://127.0.0.1:8000/api/v1/",
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://127.0.0.1:8000/api/v1/"
+      : "http://52.79.128.21/api/v1/",
   withCredentials: true,
 });
 
+// 홈화면
 export const getApartment = () =>
   localStorage.getItem("access_token")
     ? instance
@@ -19,6 +22,20 @@ export const getApartment = () =>
         .then((response) => response.data)
     : instance.get("houses/").then((response) => response.data);
 
+// 아파트 등록
+export const registerApartment = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName] = queryKey;
+  return instance
+    .post(`houses/${kaptName}/`, null, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+// 피드 리스트 가져오기
 export const getFeed = ({ queryKey }: QueryFunctionContext) => {
   const [kaptName, _] = queryKey;
   return instance
@@ -30,8 +47,25 @@ export const getFeed = ({ queryKey }: QueryFunctionContext) => {
     .then((response) => response.data);
 };
 
-/* export const knoxlogin = () =>
-  instance.post("users/login").then((response) => response.data); */
+export interface IUploadFeedVariables {
+  content: string;
+  house: string;
+  user: string;
+  photos: FileList;
+}
+
+// 피드 업로드
+export const uploadFeed = (variables: IUploadFeedVariables) => {
+  return instance
+    .post(`houses/${variables.house}/feed/`, variables, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => response.data);
+};
 
 export const getMe = () =>
   instance
@@ -119,6 +153,7 @@ export const signUp = ({ username, password, password2 }: ISignUpVariables) =>
       }
     });
 
+// 아파트 검색
 export const searchApt = ({ queryKey }: QueryFunctionContext) => {
   const [kaptName] = queryKey;
   return instance

@@ -88,7 +88,7 @@ export default function Header() {
       }}
       borderBottomWidth={1}
     >
-      <Box color="red.500">
+      <Box color="teal.500">
         <Link to={"/"}>
           <MdApartment size={"48"} />
         </Link>

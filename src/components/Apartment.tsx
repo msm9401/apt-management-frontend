@@ -1,4 +1,4 @@
-import { FaStar } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import {
   Box,
   Button,
@@ -9,9 +9,10 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface IApartmentProps {
+  pk: number;
   imageUrl: string;
   address_do: string;
   address_si: string;
@@ -21,6 +22,7 @@ interface IApartmentProps {
 }
 
 export default function Apartment({
+  pk,
   imageUrl,
   address_do,
   address_si,
@@ -29,6 +31,11 @@ export default function Apartment({
   kapt_name,
 }: IApartmentProps) {
   const gray = useColorModeValue("gray.600", "gray.300");
+  const navigate = useNavigate();
+  const onHeartClick = (event: React.SyntheticEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigate(`/houses/${kapt_name}-${pk}/`);
+  };
   return (
     <Link to={`/houses/${kapt_name}/feed/`}>
       <VStack alignItems={"flex-start"}>
@@ -39,8 +46,12 @@ export default function Apartment({
             position="absolute"
             top={0}
             right={0}
-            color="white"
-          ></Button>
+            color="teal"
+            onClick={onHeartClick}
+            title="아파트 등록하기"
+          >
+            <FaHeart size="20px" />
+          </Button>
         </Box>
         <Box>
           <Grid gap={2} templateColumns={"6fr 1fr"}>
@@ -48,7 +59,6 @@ export default function Apartment({
               {kapt_name}
             </Text>
             <HStack spacing={1} alignItems="center">
-              {/* <FaStar size={12} /> */}
               <Text fontSize={"sm"}></Text>
             </HStack>
           </Grid>
@@ -59,9 +69,6 @@ export default function Apartment({
             {address_dong} {address_li}
           </Text>
         </Box>
-        {/* <Text fontSize={"sm"} color={gray}>
-        <Text as="b">{kapt_name}</Text>
-      </Text> */}
       </VStack>
     </Link>
   );

@@ -4,6 +4,8 @@ import Home from "./routes/Home";
 import Feed from "./routes/Feed";
 import Search from "./routes/Search";
 import NotFound from "./routes/NotFound";
+import UploadFeed from "./routes/UploadFeed";
+import Enroll from "./routes/Enroll";
 
 const router = createBrowserRouter([
   {
@@ -16,11 +18,19 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "houses/:kaptName",
+        element: <Enroll />,
+      },
+      {
+        path: "houses/:kaptName/feed/upload",
+        element: <UploadFeed />,
+      },
+      {
         path: "houses/:kaptName/feed",
         element: <Feed />,
       },
       {
-        path: "houses/*",
+        path: "houses/search?",
         element: <Search />,
       },
     ],

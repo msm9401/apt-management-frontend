@@ -46,6 +46,7 @@ export default function Search() {
       {data?.map((apt) => (
         <Apartment
           key={apt.pk}
+          pk={apt.pk}
           imageUrl={`https://cdn.pixabay.com/photo/2013/07/12/18/09/apartment-building-153091_960_720.png`}
           address_do={apt.address_do}
           address_si={apt.address_si}

@@ -23,7 +23,7 @@ export interface IUser {
 }
 
 export interface IFeedList {
-  pk: number;
+  id: number;
   user: {
     username: string;
     profile_photo: string;
@@ -31,6 +31,28 @@ export interface IFeedList {
   content: string;
   photos: Array;
   comments_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface IFeedDetail {
+  id: number;
+  user: {
+    username: string;
+    profile_photo: string;
+  };
+  content: string;
+  photos: Array;
+  // only_comments: {
+  //   pk: number;
+  //   created_at: string;
+  //   updated_at: string;
+  //   content: string;
+  //   username: string;
+  //   profile_photo: string;
+  //   recomment_count: number;
+  // };
+  only_comments: Array;
   created_at: string;
   updated_at: string;
 }

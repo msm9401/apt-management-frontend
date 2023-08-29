@@ -6,6 +6,9 @@ import Search from "./routes/Search";
 import NotFound from "./routes/NotFound";
 import UploadFeed from "./routes/UploadFeed";
 import Enroll from "./routes/Enroll";
+import FeedDetail from "./routes/FeedDetail";
+import DeleteFeed from "./routes/DeleteFeed";
+import EditFeed from "./routes/EditFeed";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +23,14 @@ const router = createBrowserRouter([
       {
         path: "houses/:kaptName",
         element: <Enroll />,
+      },
+      {
+        path: "houses/:kaptName/feed/:id",
+        children: [
+          { path: "", element: <FeedDetail /> },
+          { path: "delete", element: <DeleteFeed /> },
+          { path: "edit", element: <EditFeed /> },
+        ],
       },
       {
         path: "houses/:kaptName/feed/upload",

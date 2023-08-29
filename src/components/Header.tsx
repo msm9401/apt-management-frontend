@@ -1,4 +1,4 @@
-import { FaMoon, FaSearch, FaSun } from "react-icons/fa";
+import { FaInfoCircle, FaMoon, FaSearch, FaSun } from "react-icons/fa";
 import { MdApartment } from "react-icons/md";
 import {
   Avatar,
@@ -23,6 +23,7 @@ import {
 import { Link } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
+import Guidance from "./Guidance";
 import useUser from "../lib/useUser";
 import { logOut } from "../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -30,21 +31,31 @@ import React, { useRef } from "react";
 
 export default function Header() {
   const { userLoading, isLoggedIn, user } = useUser();
+
   const {
     isOpen: isLoginOpen,
     onClose: onLoginClose,
     onOpen: onLoginOpen,
   } = useDisclosure();
+
   const {
     isOpen: isSignUpOpen,
     onClose: onSignUpClose,
     onOpen: onSignUpOpen,
   } = useDisclosure();
+
+  const {
+    isOpen: isGuidanceOpen,
+    onClose: onGuidanceClose,
+    onOpen: onGuidanceOpen,
+  } = useDisclosure();
+
   const { toggleColorMode } = useColorMode();
   const Icon = useColorModeValue(FaMoon, FaSun);
   const toast = useToast();
   const queryClient = useQueryClient();
   const toastId = useRef<ToastId>();
+
   const mutation = useMutation(logOut, {
     onMutate: () => {
       toastId.current = toast({
@@ -66,9 +77,11 @@ export default function Header() {
       }
     },
   });
+
   const onLogOut = async () => {
     mutation.mutate();
   };
+
   const [value, setValue] = React.useState("");
   const handleChange = (event: any) => setValue(event.target.value);
 
@@ -94,6 +107,12 @@ export default function Header() {
         </Link>
       </Box>
       <HStack spacing={2}>
+        <IconButton
+          colorScheme="orange"
+          aria-label="Search database"
+          icon={<FaInfoCircle />}
+          onClick={onGuidanceOpen}
+        />
         <InputGroup>
           <Input
             type="text"
@@ -143,6 +162,7 @@ export default function Header() {
       </HStack>
       <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
       <SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
+      <Guidance isOpen={isGuidanceOpen} onClose={onGuidanceClose} />
     </Stack>
   );
 }

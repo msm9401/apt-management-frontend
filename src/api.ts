@@ -47,6 +47,51 @@ export const getFeed = ({ queryKey }: QueryFunctionContext) => {
     .then((response) => response.data);
 };
 
+// 피드 가져오기
+export const getFeedDetail = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, pk] = queryKey;
+  return instance
+    .get(`houses/${kaptName}/feed/${pk}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+// 피드 삭제하기
+export const deleteFeed = ({ kaptName, id }: any) => {
+  return instance
+    .delete(`houses/${kaptName}/feed/${id}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+export interface IEditFeedVariables {
+  id: number;
+  content: string;
+  house: string;
+  user: string;
+  photos: FileList;
+}
+
+// 피드 수정하기
+export const editFeed = (variables: IEditFeedVariables) => {
+  return instance
+    .put(`houses/${variables.house}/feed/${variables.id}/`, variables, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => response.data);
+};
+
 export interface IUploadFeedVariables {
   content: string;
   house: string;
@@ -62,6 +107,25 @@ export const uploadFeed = (variables: IUploadFeedVariables) => {
         "X-CSRFToken": Cookie.get("csrftoken") || "",
         Authorization: `token ${localStorage.getItem("access_token")}`,
         "Content-Type": "multipart/form-data",
+      },
+    })
+    .then((response) => response.data);
+};
+
+export interface IUploadCommentVariables {
+  id: number;
+  content: string;
+  house: string;
+  user: string;
+}
+
+// 피드 댓글 작성
+export const uploadComment = (variables: IUploadCommentVariables) => {
+  return instance
+    .post(`houses/${variables.house}/feed/${variables.id}/`, variables, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: `token ${localStorage.getItem("access_token")}`,
       },
     })
     .then((response) => response.data);

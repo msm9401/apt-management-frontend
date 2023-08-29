@@ -10,6 +10,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { Link, useNavigate } from "react-router-dom";
+import useUser from "../lib/useUser";
 
 interface IApartmentProps {
   pk: number;
@@ -30,28 +31,32 @@ export default function Apartment({
   address_li,
   kapt_name,
 }: IApartmentProps) {
+  const { isLoggedIn } = useUser();
   const gray = useColorModeValue("gray.600", "gray.300");
   const navigate = useNavigate();
   const onHeartClick = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
     navigate(`/houses/${kapt_name}-${pk}/`);
   };
+
   return (
     <Link to={`/houses/${kapt_name}/feed/`}>
       <VStack alignItems={"flex-start"}>
         <Box position="relative" overflow={"hidden"} mb={3} rounded="2xl">
           <Image minH="280" src={imageUrl} />
-          <Button
-            variant={"unstyled"}
-            position="absolute"
-            top={0}
-            right={0}
-            color="teal"
-            onClick={onHeartClick}
-            title="아파트 등록하기"
-          >
-            <FaHeart size="20px" />
-          </Button>
+          {!isLoggedIn ? null : (
+            <Button
+              variant={"unstyled"}
+              position="absolute"
+              top={0}
+              right={0}
+              color="teal"
+              onClick={onHeartClick}
+              title="아파트 등록하기"
+            >
+              <FaHeart size="20px" />
+            </Button>
+          )}
         </Box>
         <Box>
           <Grid gap={2} templateColumns={"6fr 1fr"}>

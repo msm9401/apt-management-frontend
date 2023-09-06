@@ -131,6 +131,76 @@ export const uploadComment = (variables: IUploadCommentVariables) => {
     .then((response) => response.data);
 };
 
+// 댓글
+export const getComment = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, id, commentId] = queryKey;
+  return instance
+    .get(`houses/${kaptName}/feed/${id}/comment/${commentId}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+// 댓글 삭제
+export const deleteComment = ({ kaptName, id, commentId }: any) => {
+  return instance
+    .delete(`houses/${kaptName}/feed/${id}/comment/${commentId}`, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+export interface IEditCommentVariables {
+  id: number;
+  commentId: number;
+  content: string;
+  house: string;
+}
+
+// 댓글 수정하기
+export const editComment = (variables: IEditCommentVariables) => {
+  return instance
+    .put(
+      `houses/${variables.house}/feed/${variables.id}/comment/${variables.commentId}`,
+      variables,
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+          Authorization: `token ${localStorage.getItem("access_token")}`,
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
+export interface IReplyCommentVariables {
+  id: number;
+  commentId: number;
+  content: string;
+  house: string;
+}
+
+// 대댓글 작성하기
+export const replyComment = (variables: IReplyCommentVariables) => {
+  return instance
+    .post(
+      `houses/${variables.house}/feed/${variables.id}/comment/${variables.commentId}`,
+      variables,
+      {
+        headers: {
+          "X-CSRFToken": Cookie.get("csrftoken") || "",
+          Authorization: `token ${localStorage.getItem("access_token")}`,
+        },
+      }
+    )
+    .then((response) => response.data);
+};
+
 export const getMe = () =>
   instance
     .get("users/<str:kapt_name>/profile/myprofile", {

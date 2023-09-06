@@ -18,6 +18,7 @@ import {
   Input,
   Text,
   Textarea,
+  Tooltip,
   VStack,
   VisuallyHidden,
   useToast,
@@ -80,26 +81,43 @@ export default function FeedDetail() {
                   <Text>{data?.created_at}</Text>
                 </Box>
               </Flex>
+
               {data?.user.username === user?.username && (
                 <Link to={`/houses/${kaptName}/feed/${id}/delete`}>
-                  <IconButton
-                    variant="ghost"
-                    aria-label="Delete feed"
-                    title="피드 삭제하기"
-                    icon={<MdDelete size="20px" color="#E53E3E" />}
-                  />
+                  <Tooltip
+                    label="삭제"
+                    fontSize="md"
+                    fontWeight="bold"
+                    bg="red.400"
+                  >
+                    <IconButton
+                      variant="ghost"
+                      aria-label="Delete feed"
+                      title="피드 삭제하기"
+                      icon={<MdDelete size="20px" color="#E53E3E" />}
+                    />
+                  </Tooltip>
                 </Link>
               )}
+
               {data?.user.username === user?.username ? (
                 <Link to={`/houses/${kaptName}/feed/${id}/edit`}>
-                  <IconButton
-                    variant="ghost"
-                    aria-label="Update feed"
-                    title="피드 수정하기"
-                    icon={<MdEdit size="20px" color="#2B6CB0" />}
-                  />
+                  <Tooltip
+                    label="수정"
+                    fontSize="md"
+                    fontWeight="bold"
+                    bg="blue.400"
+                  >
+                    <IconButton
+                      variant="ghost"
+                      aria-label="Update feed"
+                      title="피드 수정하기"
+                      icon={<MdEdit size="20px" color="#2B6CB0" />}
+                    />
+                  </Tooltip>
                 </Link>
               ) : null}
+
               <IconButton
                 variant="ghost"
                 colorScheme="gray"
@@ -171,9 +189,11 @@ export default function FeedDetail() {
               />
             </VisuallyHidden>
           </FormControl>
+
           {mutation.isError ? (
-            <Text color="red.500">Something went wrong</Text>
+            <Text color="red.500">잘못된 요청입니다.</Text>
           ) : null}
+
           <Button
             type="submit"
             isLoading={mutation.isLoading}
@@ -184,6 +204,7 @@ export default function FeedDetail() {
             댓글 등록
           </Button>
         </VStack>
+
         {data?.only_comments.map((comment: any) => (
           <Card maxW="2xl" m={5}>
             <CardHeader>
@@ -200,36 +221,78 @@ export default function FeedDetail() {
                       <Text>{comment.created_at}</Text>
                     </Flex>
                     <Text>{comment.content}</Text>
+
+                    {comment.recomment_count ? (
+                      <Link
+                        to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}`}
+                      >
+                        <Text fontSize="xs" color="blue.600">
+                          답글 {comment.recomment_count}개
+                        </Text>
+                      </Link>
+                    ) : null}
                   </Box>
                 </Flex>
+
                 {comment.user__username === user?.username && (
-                  <Link to={``}>
-                    <IconButton
-                      variant="ghost"
-                      aria-label="Delete comment"
-                      title="댓글 삭제하기"
-                      icon={<MdDelete size="20px" color="#E53E3E" />}
-                    />
+                  <Link
+                    to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/delete`}
+                  >
+                    <Tooltip
+                      label="삭제"
+                      fontSize="md"
+                      fontWeight="bold"
+                      bg="red.400"
+                    >
+                      <IconButton
+                        variant="ghost"
+                        aria-label="Delete comment"
+                        title="댓글 삭제하기"
+                        icon={<MdDelete size="20px" color="#E53E3E" />}
+                      />
+                    </Tooltip>
                   </Link>
                 )}
+
                 {comment.user__username === user?.username ? (
-                  <Link to={``}>
-                    <IconButton
-                      variant="ghost"
-                      aria-label="Update comment"
-                      title="댓글 수정하기"
-                      icon={<MdEdit size="20px" color="#2B6CB0" />}
-                    />
+                  <Link
+                    to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/edit`}
+                  >
+                    <Tooltip
+                      label="수정"
+                      fontSize="md"
+                      fontWeight="bold"
+                      bg="blue.400"
+                    >
+                      <IconButton
+                        variant="ghost"
+                        aria-label="Update comment"
+                        title="댓글 수정하기"
+                        icon={<MdEdit size="20px" color="#2B6CB0" />}
+                      />
+                    </Tooltip>
                   </Link>
                 ) : null}
+
                 {comment.user__username === user?.username ? null : (
-                  <IconButton
-                    variant="ghost"
-                    colorScheme="gray"
-                    aria-label="Write recomment"
-                    title="답장하기"
-                    icon={<FaReply />}
-                  />
+                  <Link
+                    to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/reply`}
+                  >
+                    <Tooltip
+                      label="답장"
+                      fontSize="md"
+                      fontWeight="bold"
+                      bg="orange.400"
+                    >
+                      <IconButton
+                        variant="ghost"
+                        colorScheme="gray"
+                        aria-label="Write recomment"
+                        title="답장하기"
+                        icon={<FaReply />}
+                      />
+                    </Tooltip>
+                  </Link>
                 )}
               </Flex>
             </CardHeader>

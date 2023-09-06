@@ -56,3 +56,14 @@ export interface IFeedDetail {
   created_at: string;
   updated_at: string;
 }
+
+export interface IComment {
+  content: string;
+  user: {
+    username: string;
+    profile_photo: string;
+  };
+  recomments: Array;
+  created_at: string;
+  updated_at: string;
+}

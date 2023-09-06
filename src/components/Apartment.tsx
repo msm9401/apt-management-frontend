@@ -6,6 +6,7 @@ import {
   HStack,
   Image,
   Text,
+  Tooltip,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
@@ -45,22 +46,35 @@ export default function Apartment({
         <Box position="relative" overflow={"hidden"} mb={3} rounded="2xl">
           <Image minH="280" src={imageUrl} />
           {!isLoggedIn ? null : (
-            <Button
-              variant={"unstyled"}
-              position="absolute"
-              top={0}
-              right={0}
-              color="teal"
-              onClick={onHeartClick}
-              title="아파트 등록하기"
+            <Tooltip
+              label="아파트 등록하기"
+              fontSize="md"
+              fontWeight="bold"
+              bg="blue.400"
             >
-              <FaHeart size="20px" />
-            </Button>
+              <Button
+                variant={"unstyled"}
+                position="absolute"
+                top={0}
+                right={0}
+                color="teal"
+                onClick={onHeartClick}
+                //title="아파트 등록하기"
+              >
+                <FaHeart size="20px" />
+              </Button>
+            </Tooltip>
           )}
         </Box>
         <Box>
           <Grid gap={2} templateColumns={"6fr 1fr"}>
-            <Text display={"block"} as="b" noOfLines={1} fontSize="md">
+            <Text
+              display={"block"}
+              as="b"
+              noOfLines={1}
+              fontSize="md"
+              color="tomato"
+            >
               {kapt_name}
             </Text>
             <HStack spacing={1} alignItems="center">

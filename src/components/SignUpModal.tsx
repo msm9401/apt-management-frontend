@@ -45,9 +45,13 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
   const mutation = useMutation(signUp, {
     onSuccess: () => {
       toast({
-        title: "어서오세요!",
+        title: "환영합니다.",
+        description:
+          "아파트 검색 후 초록색 하트를 눌러 본인 아파트를 등록해 주세요.",
         status: "success",
         position: "top",
+        duration: 9000,
+        isClosable: true,
       });
       onClose();
       queryClient.refetchQueries(["me"]);

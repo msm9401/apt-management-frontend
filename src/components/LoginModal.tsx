@@ -43,7 +43,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
   const mutation = useMutation(usernameLogIn, {
     onSuccess: () => {
       toast({
-        title: "welcome back!",
+        title: "안녕하세요",
         status: "success",
         position: "bottom-right",
       });

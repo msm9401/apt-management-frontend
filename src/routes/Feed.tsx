@@ -1,7 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
-import { Link, useParams } from "react-router-dom";
-import { getFeed } from "../api";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 import {
+  Alert,
+  AlertIcon,
   Avatar,
   Box,
   Button,
@@ -14,7 +15,9 @@ import {
   Heading,
   IconButton,
   Image,
+  Progress,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import { IFeedList } from "../types";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -22,12 +25,56 @@ import { BiLike, BiChat, BiShare } from "react-icons/bi";
 import useUser from "../lib/useUser";
 import { MdDelete, MdEdit } from "react-icons/md";
 import AuthenticatedOnlyPage from "../components/AuthenticatedOnlyPage";
+import { useEffect, useState } from "react";
 
 export default function Feed() {
   const { user } = useUser();
   const { kaptName } = useParams();
-  const { data } = useQuery<IFeedList[]>([kaptName, `feed`], getFeed);
+  const navigate = useNavigate();
+  const [postData, setPostData] = useState<IFeedList[]>([]);
+  const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
+  const PAGE_LIMIT = 5;
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    //fetchData();
+    setTimeout(() => fetchData(), 400);
+  }, [page]);
+
+  const url =
+    process.env.NODE_ENV === "development"
+      ? "http://127.0.0.1:8000/api/v1"
+      : "http://52.79.128.21/api/v1";
+
+  const fetchData = async () => {
+    const endpoint = `${url}/houses/${kaptName}/feed?page=${page}`;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: "Get",
+        headers: {
+          Authorization: `token ${localStorage.getItem("access_token")}`,
+        },
+      });
+
+      const { results, count } = await response.json();
+      const data = [...postData].concat(results);
+
+      if (postData.length + PAGE_LIMIT >= count) {
+        setHasMore(false);
+      }
+
+      setPostData(data);
+    } catch (e) {
+      console.log(e);
+      //navigate(`${url}/houses/${kaptName}/feed?page=1`);
+    }
+  };
+  console.log(user);
   return (
     <AuthenticatedOnlyPage>
       <Box
@@ -45,62 +92,103 @@ export default function Feed() {
               "linear(to-t, blue.200, teal.500)",
               "linear(to-b, orange.100, purple.300)",
             ]}
+            borderRadius="lg"
           >
             <Center>
               <Link to={``}>
-                <Button
-                  color="#38A169"
-                  variant="ghost"
-                  m={5}
+                <Tooltip
+                  label="서비스 업데이트 예정"
+                  fontSize="md"
                   fontWeight="bold"
-                  fontSize="lg"
+                  bg="orange.400"
+                  borderRadius="lg"
                 >
-                  공지사항
-                </Button>
+                  <Button
+                    color="#38A169"
+                    variant="ghost"
+                    m={5}
+                    fontWeight="bold"
+                    fontSize="lg"
+                  >
+                    공지사항
+                  </Button>
+                </Tooltip>
               </Link>
               <Link to={``}>
-                <Button
-                  color="#38A169"
-                  variant="ghost"
-                  m={5}
+                <Tooltip
+                  label="서비스 업데이트 예정"
+                  fontSize="md"
                   fontWeight="bold"
-                  fontSize="lg"
+                  bg="orange.400"
+                  borderRadius="lg"
                 >
-                  민원접수
-                </Button>
+                  <Button
+                    color="#38A169"
+                    variant="ghost"
+                    m={5}
+                    fontWeight="bold"
+                    fontSize="lg"
+                  >
+                    민원접수
+                  </Button>
+                </Tooltip>
               </Link>
               <Link to={``}>
-                <Button
-                  color="#38A169"
-                  variant="ghost"
-                  m={5}
+                <Tooltip
+                  label="서비스 업데이트 예정"
+                  fontSize="md"
                   fontWeight="bold"
-                  fontSize="lg"
+                  bg="orange.400"
+                  borderRadius="lg"
                 >
-                  투표
-                </Button>
+                  <Button
+                    color="#38A169"
+                    variant="ghost"
+                    m={5}
+                    fontWeight="bold"
+                    fontSize="lg"
+                  >
+                    투표
+                  </Button>
+                </Tooltip>
               </Link>
               <Link to={``}>
-                <Button
-                  color="#38A169"
-                  variant="ghost"
-                  m={5}
+                <Tooltip
+                  label="서비스 업데이트 예정"
+                  fontSize="md"
                   fontWeight="bold"
-                  fontSize="lg"
+                  bg="orange.400"
+                  borderRadius="lg"
                 >
-                  연락처
-                </Button>
+                  <Button
+                    color="#38A169"
+                    variant="ghost"
+                    m={5}
+                    fontWeight="bold"
+                    fontSize="lg"
+                  >
+                    연락처
+                  </Button>
+                </Tooltip>
               </Link>
               <Link to={``}>
-                <Button
-                  color="#38A169"
-                  variant="ghost"
-                  m={5}
+                <Tooltip
+                  label="서비스 업데이트 예정"
+                  fontSize="md"
                   fontWeight="bold"
-                  fontSize="lg"
+                  bg="orange.400"
+                  borderRadius="lg"
                 >
-                  주요일정
-                </Button>
+                  <Button
+                    color="#38A169"
+                    variant="ghost"
+                    m={5}
+                    fontWeight="bold"
+                    fontSize="lg"
+                  >
+                    주요일정
+                  </Button>
+                </Tooltip>
               </Link>
             </Center>
           </Box>
@@ -120,88 +208,120 @@ export default function Feed() {
             {kaptName} 커뮤니티에 포스트를 남겨보세요
           </Button>
         </Link>
-        {data?.map((feed) => (
-          <Card maxW="2xl" m={5}>
-            <Link to={`/houses/${kaptName}/feed/${feed.id}/`}>
-              <CardHeader>
-                <Flex>
-                  <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-                    <Avatar
-                      name={feed?.user.username}
-                      src={feed?.user.profile_photo}
+        <InfiniteScroll
+          dataLength={postData.length}
+          next={() => setPage((prevState) => prevState + 1)}
+          hasMore={hasMore}
+          loader={<Progress size="xs" isIndeterminate />}
+          endMessage={
+            <Alert status="info" w="50%">
+              <AlertIcon />
+              마지막 포스트 입니다.
+            </Alert>
+          }
+        >
+          {postData?.map((feed) => (
+            <Card maxW="2xl" m={5}>
+              <Link to={`/houses/${kaptName}/feed/${feed.id}/`}>
+                <CardHeader>
+                  <Flex>
+                    <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
+                      <Avatar
+                        name={feed.user.username}
+                        src={feed.user.profile_photo}
+                      />
+
+                      <Box>
+                        <Heading size="sm">{feed.user.username}</Heading>
+                        <Text>{feed.created_at}</Text>
+                      </Box>
+                    </Flex>
+
+                    {feed.user.username === user?.username && (
+                      <Link to={`/houses/${kaptName}/feed/${feed.id}/delete`}>
+                        <Tooltip
+                          label="삭제"
+                          fontSize="md"
+                          fontWeight="bold"
+                          bg="red.400"
+                        >
+                          <IconButton
+                            variant="ghost"
+                            aria-label="Delete feed"
+                            title="피드 삭제하기"
+                            icon={<MdDelete size="20px" color="#E53E3E" />}
+                          />
+                        </Tooltip>
+                      </Link>
+                    )}
+
+                    {feed.user.username === user?.username ? (
+                      <Link to={`/houses/${kaptName}/feed/${feed.id}/edit`}>
+                        <Tooltip
+                          label="수정"
+                          fontSize="md"
+                          fontWeight="bold"
+                          bg="blue.400"
+                        >
+                          <IconButton
+                            variant="ghost"
+                            aria-label="Update feed"
+                            title="피드 수정하기"
+                            icon={<MdEdit size="20px" color="#2B6CB0" />}
+                          />
+                        </Tooltip>
+                      </Link>
+                    ) : null}
+
+                    <IconButton
+                      variant="ghost"
+                      colorScheme="gray"
+                      aria-label="See menu"
+                      icon={<BsThreeDotsVertical />}
                     />
-
-                    <Box>
-                      <Heading size="sm">{feed.user.username}</Heading>
-                      <Text>{feed.created_at}</Text>
-                    </Box>
                   </Flex>
-                  {feed?.user.username === user?.username && (
-                    <Link to={`/houses/${kaptName}/feed/${feed.id}/delete`}>
-                      <IconButton
-                        variant="ghost"
-                        aria-label="Delete feed"
-                        title="피드 삭제하기"
-                        icon={<MdDelete size="20px" color="#E53E3E" />}
-                      />
-                    </Link>
-                  )}
-                  {feed?.user.username === user?.username ? (
-                    <Link to={`/houses/${kaptName}/feed/${feed.id}/edit`}>
-                      <IconButton
-                        variant="ghost"
-                        aria-label="Update feed"
-                        title="피드 수정하기"
-                        icon={<MdEdit size="20px" color="#2B6CB0" />}
-                      />
-                    </Link>
-                  ) : null}
-                  <IconButton
-                    variant="ghost"
-                    colorScheme="gray"
-                    aria-label="See menu"
-                    icon={<BsThreeDotsVertical />}
-                  />
-                </Flex>
-              </CardHeader>
-              <CardBody>
-                <Text>{feed.content}</Text>
-              </CardBody>
-              <Image objectFit="cover" src={feed.photos[0]?.file} />
-            </Link>
+                </CardHeader>
+                <CardBody>
+                  <Text>{feed.content}</Text>
+                </CardBody>
+                <Image objectFit="cover" src={feed.photos[0]?.file} />
+              </Link>
 
-            <CardFooter
-              justify="space-between"
-              flexWrap="wrap"
-              sx={{
-                "& > button": {
-                  minW: "136px",
-                },
-              }}
-            >
-              <Button flex="1" variant="ghost" leftIcon={<BiLike />}>
-                Like
-              </Button>
-              {feed.comments_count > 0 ? (
-                <Button
-                  flex="1"
-                  variant="ghost"
-                  leftIcon={<BiChat />}
-                  color="blue.500"
-                >
-                  {feed.comments_count} Comment
+              <CardFooter
+                justify="space-between"
+                flexWrap="wrap"
+                sx={{
+                  "& > button": {
+                    minW: "136px",
+                  },
+                }}
+              >
+                <Button flex="1" variant="ghost" leftIcon={<BiLike />}>
+                  Like
                 </Button>
-              ) : (
-                <Button flex="1" variant="ghost" leftIcon={<BiChat />}>
-                  {feed.comments_count} Comment
+
+                {feed.comments_count > 0 ? (
+                  <Button
+                    flex="1"
+                    variant="ghost"
+                    leftIcon={<BiChat />}
+                    color="blue.500"
+                  >
+                    {feed.comments_count} Comment
+                  </Button>
+                ) : (
+                  <Button flex="1" variant="ghost" leftIcon={<BiChat />}>
+                    {feed.comments_count} Comment
+                  </Button>
+                )}
+
+                <Button flex="1" variant="ghost" leftIcon={<BiShare />}>
+                  Share
                 </Button>
-              )}
-              <Button flex="1" variant="ghost" leftIcon={<BiShare />}>
-                Share
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
+              </CardFooter>
+            </Card>
+          ))}
+        </InfiniteScroll>
       </Box>
     </AuthenticatedOnlyPage>
   );

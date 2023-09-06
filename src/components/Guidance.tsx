@@ -26,6 +26,10 @@ export default function Guidance({ isOpen, onClose }: GuidanceProps) {
         <ModalBody>
           <UnorderedList>
             <ListItem>
+              현재 사이트는 기능 확인 목적의 데모 사이트입니다.
+            </ListItem>
+            <ListItem>현재 경기도에 있는 아파트만 등록되어 있습니다.</ListItem>
+            <ListItem>
               현재 사이트는 개발 진행 중인 사이트라 기능적으로 완전하지
               않습니다.
             </ListItem>

@@ -9,6 +9,10 @@ import Enroll from "./routes/Enroll";
 import FeedDetail from "./routes/FeedDetail";
 import DeleteFeed from "./routes/DeleteFeed";
 import EditFeed from "./routes/EditFeed";
+import DeleteComment from "./routes/DeleteComment";
+import EditComment from "./routes/EditComment";
+import ReplyComment from "./routes/ReplyComment";
+import CommentDetail from "./routes/CommentDetail";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +34,10 @@ const router = createBrowserRouter([
           { path: "", element: <FeedDetail /> },
           { path: "delete", element: <DeleteFeed /> },
           { path: "edit", element: <EditFeed /> },
+          { path: "comment/:commentId", element: <CommentDetail /> },
+          { path: "comment/:commentId/delete", element: <DeleteComment /> },
+          { path: "comment/:commentId/edit", element: <EditComment /> },
+          { path: "comment/:commentId/reply", element: <ReplyComment /> },
         ],
       },
       {

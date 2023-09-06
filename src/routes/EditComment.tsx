@@ -16,33 +16,35 @@ import ProtectedPage from "../components/ProtectedPage";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { IEditFeedVariables, editFeed, getFeedDetail } from "../api";
-import { IFeedDetail } from "../types";
+import { IEditCommentVariables, editComment, getComment } from "../api";
+import React from "react";
+import { IComment } from "../types";
 
-export default function EditFeed() {
-  const { kaptName, id } = useParams();
-  const { register, handleSubmit } = useForm<IEditFeedVariables>();
+export default function EditComment() {
+  const { kaptName, id, commentId } = useParams();
+
+  const { data } = useQuery<IComment>(
+    [kaptName, id, commentId, `comment`],
+    getComment
+  );
+
+  const { register, handleSubmit } = useForm<IEditCommentVariables>();
   const toast = useToast();
   const navigate = useNavigate();
 
-  const { data } = useQuery<IFeedDetail>(
-    [kaptName, id, `feed_detail`],
-    getFeedDetail
-  );
-
-  const mutation = useMutation(editFeed, {
+  const mutation = useMutation(editComment, {
     onSuccess: () => {
       toast({
         status: "success",
-        title: "피드 수정",
+        title: "댓글 수정",
         position: "bottom-right",
       });
       navigate(`/houses/${kaptName}/feed/${id}/`);
     },
   });
 
-  const onSubmit = (editData: IEditFeedVariables) => {
-    mutation.mutate(editData);
+  const onSubmit = (editdata: IEditCommentVariables) => {
+    mutation.mutate(editdata);
   };
 
   return (
@@ -56,7 +58,7 @@ export default function EditFeed() {
         }}
       >
         <Container>
-          <Heading textAlign={"center"}>포스트 수정</Heading>
+          <Heading textAlign={"center"}>댓글 수정</Heading>
           <VStack
             spacing={5}
             as="form"
@@ -64,14 +66,8 @@ export default function EditFeed() {
             onSubmit={handleSubmit(onSubmit)}
           >
             <FormControl>
-              <FormLabel>포스트를 수정해보세요</FormLabel>
-              <Textarea
-                {...register("content", { required: true })}
-                defaultValue={data?.content}
-              />
-            </FormControl>
-            <FormControl>
-              <Input {...register("photos")} type="file" accept="image/*" />
+              <FormLabel>댓글 수정해보세요</FormLabel>
+              <Textarea {...register("content")} defaultValue={data?.content} />
             </FormControl>
             <FormControl>
               <VisuallyHidden>
@@ -95,6 +91,17 @@ export default function EditFeed() {
                 />
               </VisuallyHidden>
             </FormControl>
+            <FormControl>
+              <VisuallyHidden>
+                <Input
+                  {...register("commentId", { required: true })}
+                  required
+                  type="text"
+                  defaultValue={commentId}
+                  readOnly
+                />
+              </VisuallyHidden>
+            </FormControl>
 
             {mutation.isError ? (
               <Text color="red.500">잘못된 요청입니다.</Text>
@@ -107,7 +114,7 @@ export default function EditFeed() {
               size="lg"
               w="100%"
             >
-              포스트 수정
+              댓글 수정
             </Button>
           </VStack>
         </Container>

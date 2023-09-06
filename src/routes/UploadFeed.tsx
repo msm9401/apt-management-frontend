@@ -28,7 +28,7 @@ export default function UploadFeed() {
     onSuccess: () => {
       toast({
         status: "success",
-        title: "Feed created",
+        title: "피드 생성",
         position: "bottom-right",
       });
       navigate(`/houses/${kaptName}/feed`);

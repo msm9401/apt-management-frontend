@@ -37,11 +37,11 @@ export default function Apartment({
   const navigate = useNavigate();
   const onHeartClick = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    navigate(`/houses/${kapt_name}-${pk}/`);
+    navigate(`/${kapt_name}-${pk}/`);
   };
 
   return (
-    <Link to={`/houses/${kapt_name}/feed/`}>
+    <Link to={`/${kapt_name}/feed/`}>
       <VStack alignItems={"flex-start"}>
         <Box position="relative" overflow={"hidden"} mb={3} rounded="2xl">
           <Image minH="280" src={imageUrl} />

@@ -15,6 +15,7 @@ import {
   MenuList,
   Stack,
   ToastId,
+  Tooltip,
   useColorMode,
   useColorModeValue,
   useDisclosure,
@@ -107,12 +108,20 @@ export default function Header() {
         </Link>
       </Box>
       <HStack spacing={2}>
-        <IconButton
-          colorScheme="orange"
-          aria-label="Search database"
-          icon={<FaInfoCircle />}
-          onClick={onGuidanceOpen}
-        />
+        <Tooltip
+          label="안내 사항"
+          fontSize="md"
+          fontWeight="bold"
+          bg="orange.400"
+          borderRadius="lg"
+        >
+          <IconButton
+            colorScheme="orange"
+            aria-label="Search database"
+            icon={<FaInfoCircle />}
+            onClick={onGuidanceOpen}
+          />
+        </Tooltip>
         <InputGroup>
           <Input
             type="text"

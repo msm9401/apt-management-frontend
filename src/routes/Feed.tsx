@@ -1,8 +1,6 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
-  Alert,
-  AlertIcon,
   Avatar,
   Box,
   Button,
@@ -21,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { IFeedList } from "../types";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiLike, BiChat, BiShare } from "react-icons/bi";
+import { BiLike, BiChat, BiShare, BiArrowToTop } from "react-icons/bi";
 import useUser from "../lib/useUser";
 import { MdDelete, MdEdit } from "react-icons/md";
 import AuthenticatedOnlyPage from "../components/AuthenticatedOnlyPage";
@@ -30,7 +28,6 @@ import { useEffect, useState } from "react";
 export default function Feed() {
   const { user } = useUser();
   const { kaptName } = useParams();
-  const navigate = useNavigate();
   const [postData, setPostData] = useState<IFeedList[]>([]);
   const [hasMore, setHasMore] = useState(true);
   const [page, setPage] = useState(1);
@@ -71,10 +68,9 @@ export default function Feed() {
       setPostData(data);
     } catch (e) {
       console.log(e);
-      //navigate(`${url}/houses/${kaptName}/feed?page=1`);
     }
   };
-  console.log(user);
+
   return (
     <AuthenticatedOnlyPage>
       <Box
@@ -193,7 +189,7 @@ export default function Feed() {
             </Center>
           </Box>
         </Flex>
-        <Link to={`/houses/${kaptName}/feed/upload`}>
+        <Link to={`/${kaptName}/feed/upload`}>
           <Button
             colorScheme="teal"
             variant="outline"
@@ -214,15 +210,16 @@ export default function Feed() {
           hasMore={hasMore}
           loader={<Progress size="xs" isIndeterminate />}
           endMessage={
-            <Alert status="info" w="50%">
-              <AlertIcon />
-              마지막 포스트 입니다.
-            </Alert>
+            <a href="#">
+              <Button color="blue.400" rightIcon={<BiArrowToTop size="30px" />}>
+                마지막 포스트(클릭하고 맨 위로 가기)
+              </Button>
+            </a>
           }
         >
           {postData?.map((feed) => (
             <Card maxW="2xl" m={5}>
-              <Link to={`/houses/${kaptName}/feed/${feed.id}/`}>
+              <Link to={`/${kaptName}/feed/${feed.id}/`}>
                 <CardHeader>
                   <Flex>
                     <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
@@ -238,7 +235,7 @@ export default function Feed() {
                     </Flex>
 
                     {feed.user.username === user?.username && (
-                      <Link to={`/houses/${kaptName}/feed/${feed.id}/delete`}>
+                      <Link to={`/${kaptName}/feed/${feed.id}/delete`}>
                         <Tooltip
                           label="삭제"
                           fontSize="md"
@@ -256,7 +253,7 @@ export default function Feed() {
                     )}
 
                     {feed.user.username === user?.username ? (
-                      <Link to={`/houses/${kaptName}/feed/${feed.id}/edit`}>
+                      <Link to={`/${kaptName}/feed/${feed.id}/edit`}>
                         <Tooltip
                           label="수정"
                           fontSize="md"

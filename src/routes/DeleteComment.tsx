@@ -32,7 +32,7 @@ export default function DeleteComment() {
         position: "bottom-right",
       });
       queryClient.refetchQueries([kaptName, id, `feed_detail`]);
-      navigate(`/houses/${kaptName}/feed/${id}`);
+      navigate(`/${kaptName}/feed/${id}`);
     },
   });
 
@@ -56,7 +56,7 @@ export default function DeleteComment() {
       </AlertDescription>
 
       <Flex alignItems={"center"} justifyContent="space-between" gap={3}>
-        <Link to={`/houses/${kaptName}/feed/${id}`}>
+        <Link to={`/${kaptName}/feed/${id}`}>
           <Button bgColor={"teal"}>취소하기</Button>
         </Link>
         <Button

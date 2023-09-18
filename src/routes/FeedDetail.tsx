@@ -83,7 +83,7 @@ export default function FeedDetail() {
               </Flex>
 
               {data?.user.username === user?.username && (
-                <Link to={`/houses/${kaptName}/feed/${id}/delete`}>
+                <Link to={`/${kaptName}/feed/${id}/delete`}>
                   <Tooltip
                     label="삭제"
                     fontSize="md"
@@ -101,7 +101,7 @@ export default function FeedDetail() {
               )}
 
               {data?.user.username === user?.username ? (
-                <Link to={`/houses/${kaptName}/feed/${id}/edit`}>
+                <Link to={`/${kaptName}/feed/${id}/edit`}>
                   <Tooltip
                     label="수정"
                     fontSize="md"
@@ -224,7 +224,7 @@ export default function FeedDetail() {
 
                     {comment.recomment_count ? (
                       <Link
-                        to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}`}
+                        to={`/${kaptName}/feed/${id}/comment/${comment.id}`}
                       >
                         <Text fontSize="xs" color="blue.600">
                           답글 {comment.recomment_count}개
@@ -236,7 +236,7 @@ export default function FeedDetail() {
 
                 {comment.user__username === user?.username && (
                   <Link
-                    to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/delete`}
+                    to={`/${kaptName}/feed/${id}/comment/${comment.id}/delete`}
                   >
                     <Tooltip
                       label="삭제"
@@ -256,7 +256,7 @@ export default function FeedDetail() {
 
                 {comment.user__username === user?.username ? (
                   <Link
-                    to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/edit`}
+                    to={`/${kaptName}/feed/${id}/comment/${comment.id}/edit`}
                   >
                     <Tooltip
                       label="수정"
@@ -276,7 +276,7 @@ export default function FeedDetail() {
 
                 {comment.user__username === user?.username ? null : (
                   <Link
-                    to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/reply`}
+                    to={`/${kaptName}/feed/${id}/comment/${comment.id}/reply`}
                   >
                     <Tooltip
                       label="답장"

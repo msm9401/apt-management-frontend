@@ -38,7 +38,7 @@ export default function ReplyComment() {
         title: "대댓글 작성",
         position: "bottom-right",
       });
-      navigate(`/houses/${kaptName}/feed/${id}`);
+      navigate(`/${kaptName}/feed/${id}`);
     },
   });
 

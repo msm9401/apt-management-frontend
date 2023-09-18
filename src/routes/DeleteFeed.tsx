@@ -24,7 +24,7 @@ export default function DeleteFeed() {
         title: "피드 삭제",
         position: "bottom-right",
       });
-      navigate(`/houses/${kaptName}/feed`);
+      navigate(`/${kaptName}/feed`);
     },
   });
 
@@ -46,7 +46,7 @@ export default function DeleteFeed() {
         포스트를 삭제하시겠습니까?
       </AlertDescription>
       <Flex alignItems={"center"} justifyContent="space-between" gap={3}>
-        <Link to={`/houses/${kaptName}/feed/${id}`}>
+        <Link to={`/${kaptName}/feed/${id}`}>
           <Button bgColor={"teal"}>취소하기</Button>
         </Link>
         <Button

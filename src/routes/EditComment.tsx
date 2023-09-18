@@ -39,7 +39,7 @@ export default function EditComment() {
         title: "댓글 수정",
         position: "bottom-right",
       });
-      navigate(`/houses/${kaptName}/feed/${id}/`);
+      navigate(`/${kaptName}/feed/${id}/`);
     },
   });
 

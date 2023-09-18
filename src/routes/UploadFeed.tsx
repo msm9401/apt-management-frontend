@@ -31,7 +31,7 @@ export default function UploadFeed() {
         title: "피드 생성",
         position: "bottom-right",
       });
-      navigate(`/houses/${kaptName}/feed`);
+      navigate(`/${kaptName}/feed`);
     },
   });
 

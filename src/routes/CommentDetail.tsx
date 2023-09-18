@@ -62,7 +62,7 @@ export default function CommentDetail() {
 
                   {data?.user.username === user?.username && (
                     <Link
-                      to={`/houses/${kaptName}/feed/${id}/comment/${commentId}/delete`}
+                      to={`/${kaptName}/feed/${id}/comment/${commentId}/delete`}
                     >
                       <Tooltip
                         label="삭제"
@@ -83,7 +83,7 @@ export default function CommentDetail() {
 
                   {data?.user.username === user?.username ? (
                     <Link
-                      to={`/houses/${kaptName}/feed/${id}/comment/${commentId}/edit`}
+                      to={`/${kaptName}/feed/${id}/comment/${commentId}/edit`}
                     >
                       <Tooltip
                         label="수정"
@@ -103,7 +103,7 @@ export default function CommentDetail() {
 
                   {data?.user.username === user?.username ? null : (
                     <Link
-                      to={`/houses/${kaptName}/feed/${id}/comment/${commentId}/reply`}
+                      to={`/${kaptName}/feed/${id}/comment/${commentId}/reply`}
                     >
                       <Tooltip
                         label="답장"
@@ -152,7 +152,7 @@ export default function CommentDetail() {
 
                     {comment.user__username === user?.username && (
                       <Link
-                        to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/delete`}
+                        to={`/${kaptName}/feed/${id}/comment/${comment.id}/delete`}
                       >
                         <Tooltip
                           label="삭제"
@@ -173,7 +173,7 @@ export default function CommentDetail() {
 
                     {comment.user__username === user?.username ? (
                       <Link
-                        to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/edit`}
+                        to={`/${kaptName}/feed/${id}/comment/${comment.id}/edit`}
                       >
                         <Tooltip
                           label="수정"
@@ -193,7 +193,7 @@ export default function CommentDetail() {
 
                     {comment.user__username === user?.username ? null : (
                       <Link
-                        to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}/reply`}
+                        to={`/${kaptName}/feed/${id}/comment/${comment.id}/reply`}
                       >
                         <Tooltip
                           label="답장"
@@ -218,9 +218,7 @@ export default function CommentDetail() {
                 </CardBody>
 
                 {comment.recomment_count ? (
-                  <Link
-                    to={`/houses/${kaptName}/feed/${id}/comment/${comment.id}`}
-                  >
+                  <Link to={`/${kaptName}/feed/${id}/comment/${comment.id}`}>
                     <Text fontSize="xs" color="blue.600">
                       답글 {comment.recomment_count}개
                     </Text>

@@ -37,7 +37,7 @@ export default function EditFeed() {
         title: "피드 수정",
         position: "bottom-right",
       });
-      navigate(`/houses/${kaptName}/feed/${id}/`);
+      navigate(`/${kaptName}/feed/${id}/`);
     },
   });
 

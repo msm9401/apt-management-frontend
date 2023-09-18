@@ -25,11 +25,11 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "houses/:kaptName",
+        path: ":kaptName",
         element: <Enroll />,
       },
       {
-        path: "houses/:kaptName/feed/:id",
+        path: ":kaptName/feed/:id",
         children: [
           { path: "", element: <FeedDetail /> },
           { path: "delete", element: <DeleteFeed /> },
@@ -41,11 +41,11 @@ const router = createBrowserRouter([
         ],
       },
       {
-        path: "houses/:kaptName/feed/upload",
+        path: ":kaptName/feed/upload",
         element: <UploadFeed />,
       },
       {
-        path: "houses/:kaptName/feed",
+        path: ":kaptName/feed",
         element: <Feed />,
       },
       {

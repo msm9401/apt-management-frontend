@@ -25,7 +25,7 @@ import {
 } from "@chakra-ui/react";
 import { IFeedDetail } from "../types";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { BiLike, BiChat, BiShare } from "react-icons/bi";
+import { BiLike, BiChat, BiShare, BiArrowBack } from "react-icons/bi";
 import useUser from "../lib/useUser";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { FaReply } from "react-icons/fa";
@@ -68,6 +68,11 @@ export default function FeedDetail() {
           lg: 40,
         }}
       >
+        <Link to={`/${kaptName}/feed/`}>
+          <Heading textAlign={"left"}>
+            <BiArrowBack />
+          </Heading>
+        </Link>
         <Card maxW="2xl" m={5}>
           <CardHeader>
             <Flex>
@@ -289,7 +294,7 @@ export default function FeedDetail() {
                         colorScheme="gray"
                         aria-label="Write recomment"
                         title="답장하기"
-                        icon={<FaReply />}
+                        icon={<FaReply color="#F6AD55" />}
                       />
                     </Tooltip>
                   </Link>

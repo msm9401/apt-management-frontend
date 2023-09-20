@@ -50,7 +50,7 @@ export default function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
           "등록된 아파트가 없어서 빈 화면이 뜹니다. 검색창에서 아파트를 검색 후 각 검색결과의 우측 상단에 초록색 하트를 눌러 본인 아파트를 등록해 주세요.",
         status: "success",
         position: "top",
-        duration: 15000,
+        duration: 10000,
       });
       onClose();
       queryClient.refetchQueries(["me"]);

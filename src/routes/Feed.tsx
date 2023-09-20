@@ -21,7 +21,7 @@ import { IFeedList } from "../types";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { BiLike, BiChat, BiShare, BiArrowToTop } from "react-icons/bi";
 import useUser from "../lib/useUser";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { MdDelete, MdEdit, MdPostAdd } from "react-icons/md";
 import AuthenticatedOnlyPage from "../components/AuthenticatedOnlyPage";
 import { useEffect, useState } from "react";
 
@@ -201,6 +201,7 @@ export default function Feed() {
               bgGradient: "linear(to-r, red.500, yellow.500)",
             }}
           >
+            <MdPostAdd size={"25px"} />
             {kaptName} 커뮤니티에 포스트를 남겨보세요
           </Button>
         </Link>
@@ -298,14 +299,16 @@ export default function Feed() {
                 </Button>
 
                 {feed.comments_count > 0 ? (
-                  <Button
-                    flex="1"
-                    variant="ghost"
-                    leftIcon={<BiChat />}
-                    color="blue.500"
-                  >
-                    {feed.comments_count} Comment
-                  </Button>
+                  <Link to={`/${kaptName}/feed/${feed.id}/`}>
+                    <Button
+                      flex="1"
+                      variant="ghost"
+                      leftIcon={<BiChat />}
+                      color="blue.500"
+                    >
+                      {feed.comments_count} Comment
+                    </Button>
+                  </Link>
                 ) : (
                   <Button flex="1" variant="ghost" leftIcon={<BiChat />}>
                     {feed.comments_count} Comment

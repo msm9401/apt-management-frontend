@@ -23,6 +23,7 @@ import { IComment } from "../types";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { FaReply } from "react-icons/fa";
 import useUser from "../lib/useUser";
+import { BiArrowBack } from "react-icons/bi";
 
 export default function CommentDetail() {
   const { user } = useUser();
@@ -43,6 +44,11 @@ export default function CommentDetail() {
         }}
       >
         <Container>
+          <Link to={`/${kaptName}/feed/${id}`}>
+            <Heading textAlign={"left"}>
+              <BiArrowBack />
+            </Heading>
+          </Link>
           <Heading textAlign={"center"}>댓글</Heading>
           <VStack spacing={5} as="form" mt={1}>
             <Card maxW="md" m={5}>
@@ -116,7 +122,7 @@ export default function CommentDetail() {
                           colorScheme="gray"
                           aria-label="Write recomment"
                           title="답장하기"
-                          icon={<FaReply />}
+                          icon={<FaReply color="#F6AD55" />}
                         />
                       </Tooltip>
                     </Link>
@@ -206,7 +212,7 @@ export default function CommentDetail() {
                             colorScheme="gray"
                             aria-label="Write recomment"
                             title="답장하기"
-                            icon={<FaReply />}
+                            icon={<FaReply color="#F6AD55" />}
                           />
                         </Tooltip>
                       </Link>

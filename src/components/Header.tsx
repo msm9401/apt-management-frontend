@@ -21,7 +21,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
 import Guidance from "./Guidance";
@@ -56,6 +56,7 @@ export default function Header() {
   const toast = useToast();
   const queryClient = useQueryClient();
   const toastId = useRef<ToastId>();
+  const navigate = useNavigate();
 
   const mutation = useMutation(logOut, {
     onMutate: () => {
@@ -85,6 +86,16 @@ export default function Header() {
 
   const [value, setValue] = React.useState("");
   const handleChange = (event: any) => setValue(event.target.value);
+
+  const handleOnClick = () => {
+    navigate(`/houses/search?keyword=${value}`);
+  };
+
+  const handleOnKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleOnClick();
+    }
+  };
 
   return (
     <Stack
@@ -128,6 +139,7 @@ export default function Header() {
             placeholder="아파트 찾기"
             value={value}
             onChange={handleChange}
+            onKeyDown={handleOnKeyPress}
           />
           <Link to={`/houses/search?keyword=${value}`}>
             <InputRightElement>

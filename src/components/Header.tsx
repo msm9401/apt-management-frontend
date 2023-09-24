@@ -73,8 +73,8 @@ export default function Header() {
         queryClient.refetchQueries(["houses"]);
         toast.update(toastId.current, {
           status: "success",
-          title: "로그아웃 완료.",
-          description: "안녕히 계세요.",
+          title: "로그아웃",
+          description: "안녕히 계세요",
         });
       }
     },

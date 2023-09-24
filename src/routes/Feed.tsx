@@ -231,7 +231,7 @@ export default function Feed() {
 
                       <Box>
                         <Heading size="sm">{feed.user.username}</Heading>
-                        <Text>{feed.created_at}</Text>
+                        <Text>{feed.created_at_string}</Text>
                       </Box>
                     </Flex>
 

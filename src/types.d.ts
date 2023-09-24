@@ -31,8 +31,8 @@ export interface IFeedList {
   content: string;
   photos: Array;
   comments_count: number;
-  created_at: string;
-  updated_at: string;
+  created_at_string: string;
+  updated_at_string: string;
 }
 
 export interface IFeedDetail {
@@ -53,8 +53,8 @@ export interface IFeedDetail {
   //   recomment_count: number;
   // };
   only_comments: Array;
-  created_at: string;
-  updated_at: string;
+  created_at_string: string;
+  updated_at_string: string;
 }
 
 export interface IComment {
@@ -64,6 +64,6 @@ export interface IComment {
     profile_photo: string;
   };
   recomments: Array;
-  created_at: string;
-  updated_at: string;
+  created_at_string: string;
+  updated_at_string: string;
 }

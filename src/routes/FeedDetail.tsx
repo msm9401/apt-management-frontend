@@ -83,7 +83,7 @@ export default function FeedDetail() {
                 />
                 <Box>
                   <Heading size="sm">{data?.user.username}</Heading>
-                  <Text>{data?.created_at}</Text>
+                  <Text>{data?.created_at_string}</Text>
                 </Box>
               </Flex>
 
@@ -223,7 +223,7 @@ export default function FeedDetail() {
                   <Box>
                     <Flex gap="2">
                       <Heading size="sm">{comment.user__username}</Heading>
-                      <Text>{comment.created_at}</Text>
+                      <Text>{comment.created_at_string}</Text>
                     </Flex>
                     <Text>{comment.content}</Text>
 

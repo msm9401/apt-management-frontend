@@ -62,7 +62,7 @@ export default function CommentDetail() {
 
                     <Box>
                       <Heading size="sm">{data?.user.username}</Heading>
-                      <Text>{data?.created_at}</Text>
+                      <Text>{data?.created_at_string}</Text>
                     </Box>
                   </Flex>
 
@@ -152,7 +152,7 @@ export default function CommentDetail() {
 
                       <Box>
                         <Heading size="sm">{comment.user__username}</Heading>
-                        <Text>{comment.created_at}</Text>
+                        <Text>{comment.created_at_string}</Text>
                       </Box>
                     </Flex>
 

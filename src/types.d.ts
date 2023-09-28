@@ -67,3 +67,27 @@ export interface IComment {
   created_at_string: string;
   updated_at_string: string;
 }
+
+export interface INotice {
+  count: number;
+  next: string;
+  previous: string;
+  results: [
+    {
+      id: number;
+      title: string;
+      created_at_string: string;
+    }
+  ];
+  // id: number;
+  // title: string;
+  // created_at_string: string;
+}
+
+export interface INoticeDetail {
+  id: number;
+  title: string;
+  content: string;
+  created_at_string: string;
+  updated_at_string: string;
+}

@@ -91,24 +91,16 @@ export default function Feed() {
             borderRadius="lg"
           >
             <Center>
-              <Link to={``}>
-                <Tooltip
-                  label="서비스 업데이트 예정"
-                  fontSize="md"
+              <Link to={`/${kaptName}/notice`}>
+                <Button
+                  color="#38A169"
+                  variant="ghost"
+                  m={5}
                   fontWeight="bold"
-                  bg="orange.400"
-                  borderRadius="lg"
+                  fontSize="lg"
                 >
-                  <Button
-                    color="#38A169"
-                    variant="ghost"
-                    m={5}
-                    fontWeight="bold"
-                    fontSize="lg"
-                  >
-                    공지사항
-                  </Button>
-                </Tooltip>
+                  공지사항
+                </Button>
               </Link>
               <Link to={``}>
                 <Tooltip

@@ -201,6 +201,32 @@ export const replyComment = (variables: IReplyCommentVariables) => {
     .then((response) => response.data);
 };
 
+// 공지사항 리스트 가져오기
+export const getNotice = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, _, page] = queryKey;
+
+  return instance
+    .get(`houses/${kaptName}/notice?page=${page}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+// 공지사항 가져오기
+export const getNoticeDetail = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, pk] = queryKey;
+
+  return instance
+    .get(`houses/${kaptName}/notice/${pk}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
 export const getMe = () =>
   instance
     .get("users/<str:kapt_name>/profile/myprofile", {

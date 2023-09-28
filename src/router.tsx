@@ -13,6 +13,8 @@ import DeleteComment from "./routes/DeleteComment";
 import EditComment from "./routes/EditComment";
 import ReplyComment from "./routes/ReplyComment";
 import CommentDetail from "./routes/CommentDetail";
+import Notice from "./routes/Notice";
+import NoticeDetail from "./routes/NoticeDetail";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +53,14 @@ const router = createBrowserRouter([
       {
         path: "houses/search?",
         element: <Search />,
+      },
+      {
+        path: ":kaptName/notice",
+        element: <Notice />,
+      },
+      {
+        path: ":kaptName/notice/:id",
+        element: <NoticeDetail />,
       },
     ],
   },

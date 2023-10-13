@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { searchApt } from "../api";
-import { Grid } from "@chakra-ui/react";
+import { Grid, useToast } from "@chakra-ui/react";
 import { IApartmentList } from "../types";
 import Apartment from "../components/Apartment";
 import ApartmentSkeleton from "../components/ApartmentSkeleton";
@@ -9,10 +9,25 @@ import AuthenticatedOnlyPage from "../components/AuthenticatedOnlyPage";
 
 export default function Search() {
   const [searchParams] = useSearchParams();
+  const toast = useToast();
+
   const { isLoading, data } = useQuery<IApartmentList[]>(
     [searchParams.get("keyword")],
-    searchApt
+    searchApt,
+    {
+      onError: (error: any) => {
+        toast({
+          title: error.response.data.detail,
+          status: "warning",
+          position: "top",
+          isClosable: true,
+          duration: 7000,
+          variant: "subtle",
+        });
+      },
+    }
   );
+
   return (
     <AuthenticatedOnlyPage>
       <Grid

@@ -91,3 +91,53 @@ export interface INoticeDetail {
   created_at_string: string;
   updated_at_string: string;
 }
+
+export interface IPoll {
+  count: number;
+  next: string;
+  previous: string;
+  results: [
+    {
+      id: number;
+      title: string;
+      created_at_string: string;
+      end_date: string;
+    }
+  ];
+}
+
+export interface IPollDetail {
+  id: string;
+  choice_list: [
+    {
+      title: string;
+      description: string;
+      votes: int;
+    }
+  ];
+  created_at_string: string;
+  title: string;
+  description: string;
+  end_date: string;
+  status: boolean;
+}
+
+export interface IChoice {
+  count: number;
+  next: string;
+  previous: string;
+  results: [
+    {
+      id: number;
+      title: string;
+      description: string;
+    }
+  ];
+}
+
+export interface IChoiceDetail {
+  id: number;
+  title: string;
+  description: string;
+  question: string;
+}

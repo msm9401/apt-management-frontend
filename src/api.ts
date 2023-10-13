@@ -20,6 +20,10 @@ export const getApartment = () =>
           },
         })
         .then((response) => response.data)
+        .catch((error: any) => {
+          localStorage.removeItem("access_token");
+          instance.get("houses/").then((response) => response.data);
+        })
     : instance.get("houses/").then((response) => response.data);
 
 // 아파트 등록
@@ -221,6 +225,76 @@ export const getNoticeDetail = ({ queryKey }: QueryFunctionContext) => {
   return instance
     .get(`houses/${kaptName}/notice/${pk}`, {
       headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+// 투표 리스트 가져오기
+export const getPoll = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, _, page] = queryKey;
+
+  return instance
+    .get(`houses/${kaptName}/poll?page=${page}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+// 투표 상세정보 가져오기
+export const getPollDetail = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, pk] = queryKey;
+
+  return instance
+    .get(`houses/${kaptName}/poll/${pk}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+// 특정 투표의 선택지 리스트 가져오기
+export const getChoice = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, pk, page] = queryKey;
+
+  return instance
+    .get(`houses/${kaptName}/poll/${pk}/choice?page=${page}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+// 특정 투표의 선택지 상세정보 가져오기
+export const getChoiceDetail = ({ queryKey }: QueryFunctionContext) => {
+  const [kaptName, pk, choicePk] = queryKey;
+
+  return instance
+    .get(`houses/${kaptName}/poll/${pk}/choice/${choicePk}`, {
+      headers: {
+        Authorization: `token ${localStorage.getItem("access_token")}`,
+      },
+    })
+    .then((response) => response.data);
+};
+
+export interface IVoteVariables {
+  kaptName: string;
+  id: number;
+  choiceId: number;
+}
+
+// 투표하기
+export const vote = ({ kaptName, id, choiceId }: any) => {
+  return instance
+    .post(`houses/${kaptName}/poll/${id}/choice/${choiceId}/vote`, null, {
+      headers: {
+        "X-CSRFToken": Cookie.get("csrftoken") || "",
         Authorization: `token ${localStorage.getItem("access_token")}`,
       },
     })

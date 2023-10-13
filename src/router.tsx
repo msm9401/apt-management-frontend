@@ -15,6 +15,9 @@ import ReplyComment from "./routes/ReplyComment";
 import CommentDetail from "./routes/CommentDetail";
 import Notice from "./routes/Notice";
 import NoticeDetail from "./routes/NoticeDetail";
+import Poll from "./routes/Poll";
+import PollDetail from "./routes/PollDetail";
+import Vote from "./routes/Vote";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +64,17 @@ const router = createBrowserRouter([
       {
         path: ":kaptName/notice/:id",
         element: <NoticeDetail />,
+      },
+      {
+        path: ":kaptName/poll",
+        element: <Poll />,
+      },
+      {
+        path: ":kaptName/poll/:id",
+        children: [
+          { path: "", element: <PollDetail /> },
+          { path: "choice/:choiceId/vote", element: <Vote /> },
+        ],
       },
     ],
   },

@@ -52,6 +52,17 @@ export default function NoticeDetail() {
                 피드
               </Button>
             </Link>
+            <Link to={`/${kaptName}/notice`}>
+              <Button
+                color="#38A169"
+                variant="ghost"
+                m={5}
+                fontWeight="bold"
+                fontSize="lg"
+              >
+                공지사항
+              </Button>
+            </Link>
             <Link to={``}>
               <Tooltip
                 label="서비스 업데이트 예정"
@@ -71,24 +82,16 @@ export default function NoticeDetail() {
                 </Button>
               </Tooltip>
             </Link>
-            <Link to={``}>
-              <Tooltip
-                label="서비스 업데이트 예정"
-                fontSize="md"
+            <Link to={`/${kaptName}/poll`}>
+              <Button
+                color="#38A169"
+                variant="ghost"
+                m={5}
                 fontWeight="bold"
-                bg="orange.400"
-                borderRadius="lg"
+                fontSize="lg"
               >
-                <Button
-                  color="#38A169"
-                  variant="ghost"
-                  m={5}
-                  fontWeight="bold"
-                  fontSize="lg"
-                >
-                  투표
-                </Button>
-              </Tooltip>
+                투표
+              </Button>
             </Link>
             <Link to={``}>
               <Tooltip
@@ -106,25 +109,6 @@ export default function NoticeDetail() {
                   fontSize="lg"
                 >
                   연락처
-                </Button>
-              </Tooltip>
-            </Link>
-            <Link to={``}>
-              <Tooltip
-                label="서비스 업데이트 예정"
-                fontSize="md"
-                fontWeight="bold"
-                bg="orange.400"
-                borderRadius="lg"
-              >
-                <Button
-                  color="#38A169"
-                  variant="ghost"
-                  m={5}
-                  fontWeight="bold"
-                  fontSize="lg"
-                >
-                  주요일정
                 </Button>
               </Tooltip>
             </Link>

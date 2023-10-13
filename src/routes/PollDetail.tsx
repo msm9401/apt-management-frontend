@@ -1,27 +1,27 @@
 import { useQuery } from "@tanstack/react-query";
-import { getNotice } from "../api";
-import { INotice } from "../types";
-import { useState } from "react";
+import { getPollDetail } from "../api";
+import { IPollDetail } from "../types";
 import { Link, useParams } from "react-router-dom";
 import {
-  Badge,
   Box,
   Button,
   Center,
   Divider,
   Flex,
   Heading,
+  Stack,
   Text,
   Tooltip,
 } from "@chakra-ui/react";
+import { BiArrowBack } from "react-icons/bi";
+import { BsRecordFill } from "react-icons/bs";
 
-export default function Notice() {
-  const [page, setPage] = useState(1);
-  const { kaptName } = useParams();
+export default function PollDetail() {
+  const { kaptName, id } = useParams();
 
-  const { isLoading, data } = useQuery<INotice>(
-    [kaptName, "notice", page],
-    getNotice
+  const { isLoading, data } = useQuery<IPollDetail>(
+    [kaptName, id, "poll_detail"],
+    getPollDetail
   );
 
   return (
@@ -118,53 +118,53 @@ export default function Notice() {
         </Box>
       </Flex>
 
+      <Link to={`/${kaptName}/poll`}>
+        <Heading margin={5} textAlign={"left"}>
+          <BiArrowBack />
+        </Heading>
+      </Link>
+
       <Heading marginBottom={20} marginLeft={5}>
-        {kaptName} 공지사항
+        {kaptName} 투표
       </Heading>
 
-      {Number(data?.results.length) === 0 ? (
-        <Text marginLeft={5} color={"tomato"}>
-          <Badge marginRight={2} colorScheme="red">
-            !
-          </Badge>
-          등록된 공지사항이 없습니다.
-        </Text>
-      ) : (
+      <Heading color={"blue.400"} margin={5} size={"md"}>
+        투표 주제 : {data?.title}
+      </Heading>
+
+      <Text margin={5}>{data?.created_at_string}</Text>
+      <Divider margin={5} width={"50%"} marginY={3} />
+      <Text margin={5}>{data?.description}</Text>
+      <Divider margin={5} width={"50%"} marginY={3} />
+
+      <Heading color={"blue.400"} margin={5} size={"sm"}>
+        아래 선택지 중에서 투표하시면 됩니다. 후보를 고르셨다면 선택지를
+        클릭하셔서 투표창으로 넘어가 주세요.
+      </Heading>
+
+      {data?.choice_list.map((choice: any) => (
         <>
-          {data?.results.map((notice: any) => (
-            <>
-              <Link to={`/${kaptName}/notice/${notice.pk}`}>
-                {notice.created_at_string.indexOf("전") === -1 ? (
-                  <Text
-                    fontSize={"md"}
-                    fontWeight={"bold"}
-                    marginTop={5}
-                    marginBottom={2}
-                    color="orange"
-                  >
-                    {notice.title}
-                  </Text>
-                ) : (
-                  <Text
-                    fontSize={"md"}
-                    fontWeight={"bold"}
-                    marginTop={5}
-                    marginBottom={2}
-                    color="orange"
-                  >
-                    <Badge marginRight={2} colorScheme="purple">
-                      New
-                    </Badge>
-                    {notice.title}
-                  </Text>
-                )}
-                <Text fontSize={"sm"}>{notice.created_at_string}</Text>
-              </Link>
-              <Divider width={"50%"} marginY={3} />
-            </>
-          ))}
+          <Link to={`/${kaptName}/poll/${id}/choice/${choice.id}/vote`}>
+            <Button
+              fontSize={"md"}
+              fontWeight={"bold"}
+              marginTop={5}
+              marginBottom={2}
+              marginLeft={5}
+              color="orange"
+            >
+              <BsRecordFill size={15} />
+              {choice.title}
+            </Button>
+          </Link>
+
+          <Text fontSize={"sm"} marginLeft={5}>
+            {choice.description}
+          </Text>
+
+          <Divider width={"50%"} marginY={3} />
         </>
-      )}
+      ))}
     </Box>
   );
 }

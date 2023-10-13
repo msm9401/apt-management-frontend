@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getNotice } from "../api";
-import { INotice } from "../types";
+import { getPoll } from "../api";
+import { IPoll } from "../types";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -15,13 +15,13 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 
-export default function Notice() {
+export default function Poll() {
   const [page, setPage] = useState(1);
   const { kaptName } = useParams();
 
-  const { isLoading, data } = useQuery<INotice>(
-    [kaptName, "notice", page],
-    getNotice
+  const { isLoading, data } = useQuery<IPoll>(
+    [kaptName, "poll", page],
+    getPoll
   );
 
   return (
@@ -119,7 +119,7 @@ export default function Notice() {
       </Flex>
 
       <Heading marginBottom={20} marginLeft={5}>
-        {kaptName} 공지사항
+        {kaptName} 투표
       </Heading>
 
       {Number(data?.results.length) === 0 ? (
@@ -127,14 +127,14 @@ export default function Notice() {
           <Badge marginRight={2} colorScheme="red">
             !
           </Badge>
-          등록된 공지사항이 없습니다.
+          등록된 투표가 없습니다.
         </Text>
       ) : (
         <>
-          {data?.results.map((notice: any) => (
+          {data?.results.map((poll: any) => (
             <>
-              <Link to={`/${kaptName}/notice/${notice.pk}`}>
-                {notice.created_at_string.indexOf("전") === -1 ? (
+              <Link to={`/${kaptName}/poll/${poll.id}`}>
+                {poll.created_at_string.indexOf("전") === -1 ? (
                   <Text
                     fontSize={"md"}
                     fontWeight={"bold"}
@@ -142,7 +142,7 @@ export default function Notice() {
                     marginBottom={2}
                     color="orange"
                   >
-                    {notice.title}
+                    {poll.title}
                   </Text>
                 ) : (
                   <Text
@@ -155,10 +155,10 @@ export default function Notice() {
                     <Badge marginRight={2} colorScheme="purple">
                       New
                     </Badge>
-                    {notice.title}
+                    {poll.title}
                   </Text>
                 )}
-                <Text fontSize={"sm"}>{notice.created_at_string}</Text>
+                <Text fontSize={"sm"}>{poll.created_at_string}</Text>
               </Link>
               <Divider width={"50%"} marginY={3} />
             </>

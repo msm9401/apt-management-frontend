@@ -29,7 +29,7 @@ export default function Guidance({ isOpen, onClose }: GuidanceProps) {
             <ListItem>
               <Highlight
                 query="기능 확인 목적"
-                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.100" }}
+                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.200" }}
               >
                 현재 사이트는 기능 확인 목적의 데모 사이트입니다.
               </Highlight>
@@ -37,7 +37,7 @@ export default function Guidance({ isOpen, onClose }: GuidanceProps) {
             <ListItem>
               <Highlight
                 query="경기도"
-                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.100" }}
+                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.200" }}
               >
                 현재 경기도에 있는 아파트만 등록되어 있습니다.
               </Highlight>
@@ -45,7 +45,7 @@ export default function Guidance({ isOpen, onClose }: GuidanceProps) {
             <ListItem>
               <Highlight
                 query="완전하지 않습니다"
-                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.100" }}
+                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.200" }}
               >
                 현재 사이트는 개발 진행 중인 사이트라 기능적으로 완전하지
                 않습니다.
@@ -62,10 +62,20 @@ export default function Guidance({ isOpen, onClose }: GuidanceProps) {
             </ListItem>
             <ListItem>
               <Highlight
-                query="피드(포스트)"
-                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.100" }}
+                query={["피드(포스트)", "공지사항", "투표"]}
+                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.200" }}
               >
-                현재는 피드(포스트) 기능 작동 여부만 일부 확인 가능합니다.
+                현재는 피드(포스트), 공지사항, 투표 기능 작동 여부만 일부 확인
+                가능합니다.
+              </Highlight>
+            </ListItem>
+            <ListItem>
+              <Highlight
+                query="용인신갈푸르지오"
+                styles={{ px: "2", py: "0.5", rounded: "full", bg: "red.200" }}
+              >
+                "용인신갈푸르지오"를 검색하셔서 아파트로 등록하시면 데이터가
+                있는 모습을 확인할 수 있습니다.
               </Highlight>
             </ListItem>
           </UnorderedList>

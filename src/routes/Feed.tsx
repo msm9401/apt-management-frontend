@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {
   Avatar,
+  Badge,
   Box,
   Button,
   Card,
@@ -187,11 +188,25 @@ export default function Feed() {
           hasMore={hasMore}
           loader={<Progress size="xs" isIndeterminate />}
           endMessage={
-            <a href="#">
-              <Button color="blue.400" rightIcon={<BiArrowToTop size="30px" />}>
-                마지막 포스트(클릭하고 맨 위로 가기)
-              </Button>
-            </a>
+            postData.length > 0 ? (
+              <a href="#">
+                <Button
+                  color="blue.400"
+                  rightIcon={<BiArrowToTop size="30px" />}
+                  marginLeft={4}
+                  marginBottom={4}
+                >
+                  마지막 포스트 입니다. (클릭하고 맨 위로 가기)
+                </Button>
+              </a>
+            ) : (
+              <Text marginLeft={5} color={"tomato"}>
+                <Badge marginRight={2} colorScheme="red">
+                  !
+                </Badge>
+                등록된 포스트가 없습니다. 첫 포스트를 남겨보세요.
+              </Text>
+            )
           }
         >
           {postData?.map((feed) => (

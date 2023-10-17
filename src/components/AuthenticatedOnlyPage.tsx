@@ -13,6 +13,7 @@ export default function AuthenticatedOnlyPage({
   const { isLoggedIn, userLoading } = useUser();
   const toast = useToast();
   const navigate = useNavigate();
+
   useEffect(() => {
     if (!userLoading) {
       if (!isLoggedIn) {

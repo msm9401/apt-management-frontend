@@ -18,6 +18,7 @@ import NoticeDetail from "./routes/NoticeDetail";
 import Poll from "./routes/Poll";
 import PollDetail from "./routes/PollDetail";
 import Vote from "./routes/Vote";
+import Forbidden from "./routes/Forbidden";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,7 @@ const router = createBrowserRouter([
       {
         path: ":kaptName/feed",
         element: <Feed />,
+        errorElement: <Forbidden />,
       },
       {
         path: "houses/search?",

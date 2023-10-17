@@ -25,6 +25,7 @@ export default function Search() {
           variant: "subtle",
         });
       },
+      retry: false,
     }
   );
 

@@ -196,7 +196,7 @@ export default function FeedDetail() {
           </FormControl>
 
           {mutation.isError ? (
-            <Text color="red.500">잘못된 요청입니다.</Text>
+            <Text color="red.500">잘못된 요청이거나 권한이 없습니다.</Text>
           ) : null}
 
           <Button

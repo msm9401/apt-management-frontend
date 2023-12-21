@@ -26,7 +26,7 @@ import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
 import Guidance from "./Guidance";
 import useUser from "../lib/useUser";
-import { logOut } from "../api";
+import { logOut, guestLogIn } from "../api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import React, { useRef } from "react";
 
@@ -61,8 +61,8 @@ export default function Header() {
   const mutation = useMutation(logOut, {
     onMutate: () => {
       toastId.current = toast({
-        title: "Login out...",
-        description: "Sad to see you go...",
+        title: "로그 아웃...",
+        description: "잠시만 기다려 주세요...",
         status: "loading",
         position: "bottom-right",
       });
@@ -82,6 +82,34 @@ export default function Header() {
 
   const onLogOut = async () => {
     mutation.mutate();
+  };
+
+  const guestMutation = useMutation(guestLogIn, {
+    onMutate: () => {
+      toastId.current = toast({
+        title: "로그인...",
+        description: "잠시만 기다려 주세요...",
+        status: "loading",
+        position: "top",
+      });
+    },
+    onSuccess: () => {
+      if (toastId.current) {
+        queryClient.refetchQueries(["me"]);
+        queryClient.refetchQueries(["houses"]);
+        toast.update(toastId.current, {
+          status: "success",
+          title: "게스트 유저 상태",
+          description: `안녕하세요. 둘러보기 기능입니다. 읽기만 가능하니 참고해주세요.`,
+          duration: 9000,
+          isClosable: true,
+        });
+      }
+    },
+  });
+
+  const onGuestLogIn = async () => {
+    guestMutation.mutate();
   };
 
   const [value, setValue] = React.useState("");
@@ -164,6 +192,17 @@ export default function Header() {
               <Button onClick={onSignUpOpen} colorScheme={"red"}>
                 회원가입
               </Button>
+              <Tooltip
+                label="회원가입 없이 둘러보기"
+                borderRadius={"md"}
+                fontSize={"md"}
+                fontWeight={"bold"}
+                bg={"green"}
+              >
+                <Button onClick={onGuestLogIn} colorScheme="green">
+                  둘러보기
+                </Button>
+              </Tooltip>
             </>
           ) : (
             <Menu>

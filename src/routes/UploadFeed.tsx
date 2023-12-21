@@ -76,7 +76,7 @@ export default function UploadFeed() {
               </VisuallyHidden>
             </FormControl>
             {mutation.isError ? (
-              <Text color="red.500">Something went wrong</Text>
+              <Text color="red.500">잘못된 요청이거나 권한이 없습니다.</Text>
             ) : null}
             <Button
               type="submit"

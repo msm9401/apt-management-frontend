@@ -401,7 +401,7 @@ export const searchApt = ({ queryKey }: QueryFunctionContext) => {
 
 // 게스트 유저 로그인
 export const guestLogIn = () =>
-  instance.get(`/houses/guest`).then((response) => {
+  instance.get(`/users/guest`).then((response) => {
     if (response.data["token"]) {
       const accessToken = response.data["token"];
       localStorage.setItem("access_token", accessToken);
